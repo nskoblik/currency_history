@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $date
  * @property int                        $currency_code
  * @property int                        $nominal
- * @property string                     $value
+ * @property int                        $value
  * @mixin \Eloquent
  */
 class CurrencyHistory extends Model

@@ -29,4 +29,26 @@ final class Money
         return (string)($this->amount / (10 ** self::SCALE));
     }
 
+    public function subtract(Money $money): Money
+    {
+        return new Money(
+            $this->amount - $money->getAmount()
+        );
+    }
+
+    public function divide(float $divisor, int $rounding_mode = PHP_ROUND_HALF_UP): Money
+    {
+        if ($divisor === 0.0) {
+            $divisor = 1.0;
+        }
+        $amount = \round($this->getAmount() / $divisor, 0, $rounding_mode);
+        return new Money((int)$amount);
+    }
+
+    public function multiply(float $multiplier, int $rounding_mode = PHP_ROUND_HALF_UP): Money
+    {
+        $amount = \round($this->getAmount() * $multiplier, 0, $rounding_mode);
+        return new Money((int)$amount);
+    }
+
 }

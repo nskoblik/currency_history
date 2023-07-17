@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Client;
 
-use App\Models\CurrencyHistory;
-use App\VO\CurrencyCurs;
+use App\DTO\CurrencyRateCbr;
+use App\VO\Money;
 
 class GetCurrencyClient
 {
     /**
      * @param \Illuminate\Support\Carbon $date
-     * @return CurrencyCurs[]
+     * @return CurrencyRateCbr[]
      * @throws \SoapFault
      */
     public function getCurrency(\Illuminate\Support\Carbon $date): array
@@ -37,10 +37,10 @@ class GetCurrencyClient
 
         $result = [];
         foreach ($xml->ValuteData->ValuteCursOnDate as $element) {
-            $result[] = new CurrencyCurs(
+            $result[] = new CurrencyRateCbr(
                 (int)$element->Vcode,
                 (int)$element->Vnom,
-                (string)$element->Vcurs
+                Money::getFromDecimal((float)$element->Vcurs)
             );
         }
 
